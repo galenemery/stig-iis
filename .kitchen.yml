@@ -1,0 +1,23 @@
+---
+driver:
+  name: vagrant
+  customize:
+    usb: 'off'
+    usbehci: 'off'
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: Windows-2012R2
+    driver:
+      box: mwrock/Windows2012R2
+      provider: hyperv
+      guest: windows  # required for this specifically made base box as it wasn't set in the underlying Vagrantfile
+      communicator: winrm # required for this specifically made base box as it wasn't set in the underlying Vagrantfile
+
+suites:
+  - name: default
+    run_list:
+      - recipe[stig-iis::default]
+    attributes:
